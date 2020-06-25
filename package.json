@@ -1,0 +1,20 @@
+{
+  "name": "mm-graphql-tools",
+  "version": "1.0.0",
+  "description": "Monkey Muffin GraphQL Tools",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": "git@github.com:mani1986/mm-graphql-tools.git",
+  "author": "MonkeyMuffin <infomonkeymuffin.eu>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.157",
+    "lodash": "^4.17.15"
+  }
+}

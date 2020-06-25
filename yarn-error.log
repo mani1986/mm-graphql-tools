@@ -1,0 +1,43 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add -D typescript
+
+PATH: 
+  /Users/mani/.cargo/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/mani/.cargo/bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  12.7.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/mani/Projects/mm-graphql-tools/package.json: Unexpected token } in JSON at position 337
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "mm-graphql-tools",
+    "version": "1.0.0",
+    "description": "Monkey Muffin GraphQL Tools",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+      "prepublish": "tsc"
+    },
+    "repository": "git@github.com:mani1986/mm-graphql-tools.git",
+    "author": "MonkeyMuffin <infomonkeymuffin.eu>",
+    "license": "MIT",
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
