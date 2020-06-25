@@ -20,7 +20,7 @@ export default class RequestUtil {
         next (data:any) {
           onUpdate(data.data)
         },
-        error (error:any) {
+      error (error:any) {
           throw error
         }
       })
@@ -29,7 +29,7 @@ export default class RequestUtil {
     }
   }
 
-  async makeQuery($apollo:any, query:any, variables:any) {
+  static async makeQuery($apollo:any, query:any, variables:any) {
     try {
       const request = await $apollo.query({
         query,
@@ -42,7 +42,7 @@ export default class RequestUtil {
     }
   }
 
-  async makeMutation($apollo:any, mutation:any, variables:any) {
+  static async makeMutation($apollo:any, mutation:any, variables:any) {
     try {
       const request = await $apollo.mutate({
         mutation,
