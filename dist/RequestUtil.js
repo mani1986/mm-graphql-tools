@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = __importDefault(require("lodash"));
 class RequestUtil {
     static makeSubscription($apollo, query, variables, onUpdate) {
-        const store = JSON.parse(window.localStorage.getItem('capman'));
+        const store = JSON.parse(window.localStorage.getItem('mm'));
         try {
             const request = $apollo.subscribe({
                 query,

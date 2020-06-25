@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 export default class RequestUtil {
   static makeSubscription($apollo:any, query:any, variables:any, onUpdate:Function) {
-    const store = JSON.parse(window.localStorage.getItem(process.env.KEY))
+    const store = JSON.parse(window.localStorage.getItem('mm'))
 
     try {
       const request = $apollo.subscribe({
