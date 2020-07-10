@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = __importDefault(require("lodash"));
+const Bus_1 = __importDefault(require("./Bus"));
 class RequestUtil {
     static makeSubscription($apollo, query, variables, onUpdate) {
         const store = JSON.parse(window.localStorage.getItem('mm'));
@@ -20,12 +21,12 @@ class RequestUtil {
                     onUpdate(data.data);
                 },
                 error(error) {
-                    throw error;
+                    return RequestUtil.handleError(error);
                 }
             });
         }
         catch (e) {
-            throw e;
+            return RequestUtil.handleError(e);
         }
     }
     static async makeQuery($apollo, query, variables) {
@@ -37,8 +38,23 @@ class RequestUtil {
             return RequestUtil.handleRequestOutput(request);
         }
         catch (e) {
-            throw e;
+            return RequestUtil.handleError(e);
         }
+    }
+    static handleError(error) {
+        if (error.message === 'GraphQL error: unauthenticated') {
+            Bus_1.default.$emit('logout');
+        }
+        else if (error.message === 'GraphQL error: unauthorized') {
+            Bus_1.default.$emit('notify', 'error:unauthorized');
+        }
+        else if (error.message === 'GraphQL error: self_edit') {
+            Bus_1.default.$emit('notify', 'error:self_edit');
+        }
+        else {
+            Bus_1.default.$emit('notify', 'error:unknown');
+        }
+        throw error;
     }
     static async makeMutation($apollo, mutation, variables) {
         try {
@@ -49,7 +65,7 @@ class RequestUtil {
             return RequestUtil.handleRequestOutput(request);
         }
         catch (e) {
-            throw e;
+            return RequestUtil.handleError(e);
         }
     }
     static handleRequestOutput(request) {

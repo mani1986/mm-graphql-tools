@@ -13,30 +13,31 @@ const apollo_link_ws_1 = require("apollo-link-ws");
 const apollo_cache_inmemory_1 = require("apollo-cache-inmemory");
 const apollo_utilities_1 = require("apollo-utilities");
 const authMiddleware = new apollo_link_1.ApolloLink((operation, forward) => {
-    const store = JSON.parse(window.localStorage.getItem('mm'));
+    const store = JSON.parse(window.localStorage.getItem(lodash_1.default.get(process, "env.VUE_APP_STORE_KEY", "mm")));
+    let tokenString = lodash_1.default.get(store, "auth.token", null);
     // add the authorization to the headers
     operation.setContext({
         headers: {
-            Authorization: `Bearer ${lodash_1.default.get(store, 'auth.token')}`
-        }
+            Authorization: tokenString ? `Bearer ${tokenString}` : null,
+        },
     });
     return forward(operation);
 });
 const wsLink = new apollo_link_ws_1.WebSocketLink({
-    uri: `${process.env.VUE_APP_WS || 'ws://localhost:4015'}`,
+    uri: `${process.env.VUE_APP_WS || "ws://localhost:4015"}`,
     options: {
         reconnect: true,
     },
 });
 const httpLink = apollo_link_http_1.createHttpLink({
-    uri: process.env.VUE_APP_API || 'http://localhost:4015',
+    uri: process.env.VUE_APP_API || "http://localhost:4015",
 });
 const link = apollo_link_1.split(
 // split based on operation type
 ({ query }) => {
     const definition = apollo_utilities_1.getMainDefinition(query);
-    return definition.kind === 'OperationDefinition' &&
-        definition.operation === 'subscription';
+    return (definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription");
 }, apollo_link_1.concat(authMiddleware, wsLink), apollo_link_1.concat(authMiddleware, httpLink));
 // Cache implementation
 const cache = new apollo_cache_inmemory_1.InMemoryCache();
@@ -54,6 +55,6 @@ exports.provider = new vue_apollo_1.default({
         if (networkError) {
             console.log(`[Network error]: ${networkError}`);
         }
-    }
+    },
 });
 //# sourceMappingURL=ApolloClient.js.map

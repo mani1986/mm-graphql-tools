@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import Bus from './Bus'
 
 export default class RequestUtil {
   static makeSubscription($apollo:any, query:any, variables:any, onUpdate:Function) {
@@ -21,11 +22,11 @@ export default class RequestUtil {
           onUpdate(data.data)
         },
       error (error:any) {
-          throw error
+        return RequestUtil.handleError(error)
         }
       })
     } catch (e) {
-      throw e
+      return RequestUtil.handleError(e)
     }
   }
 
@@ -38,8 +39,22 @@ export default class RequestUtil {
 
       return RequestUtil.handleRequestOutput(request)
     } catch (e) {
-      throw e
+      return RequestUtil.handleError(e)
     }
+  }
+
+  static handleError (error:Error) {
+    if (error.message === 'GraphQL error: unauthenticated') {
+      Bus.$emit('logout')
+    } else if (error.message === 'GraphQL error: unauthorized') {
+      Bus.$emit('notify', 'error:unauthorized')
+    } else if (error.message === 'GraphQL error: self_edit') {
+      Bus.$emit('notify', 'error:self_edit')
+    } else {
+      Bus.$emit('notify', 'error:unknown')
+    }
+
+    throw error
   }
 
   static async makeMutation($apollo:any, mutation:any, variables:any) {
@@ -51,7 +66,7 @@ export default class RequestUtil {
 
       return RequestUtil.handleRequestOutput(request)
     } catch (e) {
-      throw e
+      return RequestUtil.handleError(e)
     }
   }
 
