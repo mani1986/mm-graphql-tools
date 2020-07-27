@@ -57,17 +57,22 @@ export default class RequestUtil {
     throw error
   }
 
-  static async makeMutation($apollo:any, mutation:any, variables:any) {
+  static async makeMutation($apollo:any, mutation:any, variables:any, context:any = {}) {
     try {
       const request = await $apollo.mutate({
         mutation,
         variables,
+        context
       });
 
       return RequestUtil.handleRequestOutput(request)
     } catch (e) {
       return RequestUtil.handleError(e)
     }
+  }
+
+  static async makeUploadMutation($apollo:any, mutation:any, variables:any) {
+    return this.makeMutation($apollo, mutation, variables, { hasUpload: true })
   }
 
   static handleRequestOutput (request:any) {

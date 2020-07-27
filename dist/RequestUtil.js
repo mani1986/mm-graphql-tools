@@ -56,17 +56,21 @@ class RequestUtil {
         }
         throw error;
     }
-    static async makeMutation($apollo, mutation, variables) {
+    static async makeMutation($apollo, mutation, variables, context = {}) {
         try {
             const request = await $apollo.mutate({
                 mutation,
                 variables,
+                context
             });
             return RequestUtil.handleRequestOutput(request);
         }
         catch (e) {
             return RequestUtil.handleError(e);
         }
+    }
+    static async makeUploadMutation($apollo, mutation, variables) {
+        return this.makeMutation($apollo, mutation, variables, { hasUpload: true });
     }
     static handleRequestOutput(request) {
         const errors = lodash_1.default.get(request, 'errors', []);
