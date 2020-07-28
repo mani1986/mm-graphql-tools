@@ -1,6 +1,6 @@
 {
   "name": "mm-graphql-tools",
-  "version": "1.0.24",
+  "version": "1.2.1",
   "description": "Monkey Muffin GraphQL Tools",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
