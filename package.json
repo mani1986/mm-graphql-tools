@@ -1,6 +1,6 @@
 {
   "name": "mm-graphql-tools",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Monkey Muffin GraphQL Tools",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,6 +22,7 @@
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.157",
     "@types/moment": "^2.13.0",
+    "@types/node-fetch": "^2.5.7",
     "@types/vue": "^2.0.0",
     "@types/ws": "^7.2.5",
     "apollo-cache-inmemory": "^1.6.6",
@@ -34,6 +35,7 @@
     "graphql": "^15.1.0",
     "lodash": "^4.17.15",
     "moment": "^2.27.0",
+    "node-fetch": "^2.6.0",
     "subscriptions-transport-ws": "^0.9.16",
     "vue-apollo": "^3.0.3",
     "ws": "^7.3.0"
